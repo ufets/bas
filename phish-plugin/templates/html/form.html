@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Проверка почтовых фильтров на фишинг</title>
+</head>
+<body>
+    <h1>Проверка почтовых фильтров на фишинг. Введите случайные данные:</h1>
+    <form action="http://DOMAIN_NAME:PORT/api/html_form_data?q=USER_ID" method="post">
+        <label for="name">Имя:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Пароль:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>

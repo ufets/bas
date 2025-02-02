@@ -1,0 +1,3 @@
+https://github.com/redcanaryco/atomic-red-team/tree/master/atomics/T1114.001
+https://github.com/redcanaryco/atomic-red-team/tree/master/atomics/T1114.002
+https://github.com/redcanaryco/atomic-red-team/tree/master/atomics/T1114.003
