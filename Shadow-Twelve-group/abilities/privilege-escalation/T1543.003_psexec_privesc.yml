@@ -1,0 +1,16 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaz
+  name: "[SHADOW-TWELVE] Psexec local privilege escalation"
+  description: "Shadow использует psexec для повышения привилегий и выполнения команд с привилегиями NT SYSTEM"
+  tactic: privilege-escalation
+  technique:
+    attack_id: T1543.003
+    name: "Create or Modify System Process: Windows Service"
+  platforms:
+    windows:
+      psh:
+        command: |
+          PsExec.exe -s cmd.exe
+        timeout: 120
+        payloads:
+          - PsExec.exe
+

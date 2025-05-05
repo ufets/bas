@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaav
+  name: "[SHADOW-TWELVE] Ngrok - CurrentVersion/Run registry key persistence"
+  description: "Для сохранения доступа к внутреннему периметру жертв Shadow использует ключи автозапуска реестра для запуска бэкдоров"
+  tactic: persistence
+  technique:
+    attack_id: T1053.005
+    name: "Boot or Logon Autostart Execution: Registry Run Keys"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -File .\ngrk-reg-autorun.ps1
+        timeout: 120
+        payloads:
+          - ngrk-reg-autorun.ps1

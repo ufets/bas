@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ax
+  name: "Credentials from Password Stores: Password Managers"
+  description: "Adversaries may acquire user credentials from third-party password managers.[1] Password managers are applications designed to store user credentials, normally in an encrypted database. Credentials are typically accessible after a user provides a master password that unlocks the database. After the database is unlocked, these credentials may be copied to memory. These databases can be stored as files on disk."
+  tactic: credential-access
+  technique:
+    attack_id: T1555.005
+    name: "Credentials from Password Stores: Password Managers"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1555.005.ps1;
+        timeout: 90
+        payloads:
+          - T1555.005.ps1

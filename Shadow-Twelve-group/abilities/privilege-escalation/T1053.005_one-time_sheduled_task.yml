@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaax
+  name: "[SHADOW-TWELVE] One-time sheduled task creation privilege-escalation"
+  description: "Для запуска загруженных Shadow некоторых инструментов и программы-вымогателя с привилегиями NT SYSTEM используются задания планировщика Windows"
+  tactic: privilege-escalation
+  technique:
+    attack_id: T1053.005
+    name: "Scheduled Task/Job: Scheduled Task"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -File .\nt-system-one-time-tsk.ps1
+        timeout: 300
+        payloads:
+          - nt-system-one-time-tsk.ps1

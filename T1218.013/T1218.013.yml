@@ -1,0 +1,16 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ar
+  name: "System Binary Proxy Execution: Mavinject "
+  description: "Adversaries may abuse mavinject.exe to proxy execution of malicious code. Mavinject.exe is the Microsoft Application Virtualization Injector, a Windows utility that can inject code into external processes as part of Microsoft Application Virtualization (App-V)."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1218.013
+    name: "System Binary Proxy Execution: Mavinject "
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1218.013.ps1;
+        timeout: 60
+        payloads:
+          - T1218.013_payload.dll
+          - T1218.013.ps1

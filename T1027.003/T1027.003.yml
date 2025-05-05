@@ -1,0 +1,32 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363af
+  name: "Obfuscated Files or Information: Steganography"
+  description: Adversaries may use steganography techniques in order to prevent the detection of hidden information. Steganographic techniques can be used to hide data in digital media such as images, audio tracks, video clips, or text files.
+  tactic: defense-evasion
+  technique:
+    attack_id: T1027.003
+    name: System Information Discovery
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1027.003_util.py;
+          python3 ./T1027.003_util.py;
+        timeout: 60
+        payloads:
+          - T1027.003_util.py
+          - T1027.003_test.exe
+          - T1027.003_Tourist.png
+        cleanup: |
+          [ -f T1027.003_extracted_file.exe ] && rm T1027.003_extracted_file.exe; [ -f T1027.003_stego_image.png ] && rm T1027.003_stego_image.png
+    windows:
+      psh:
+        command: |
+          python ./T1027.003_util.py
+        timeout: 60
+        payloads:
+          - T1027.003_util.py
+          - T1027.003_test.exe
+          - T1027.003_Tourist.png
+        cleanup: |
+          if (Test-Path T1027.003_extracted_file.exe) { Remove-Item T1027.003_extracted_file.exe };
+          if (Test-Path T1027.003_stego_image.png) { Remove-Item T1027.003_stego_image.png };

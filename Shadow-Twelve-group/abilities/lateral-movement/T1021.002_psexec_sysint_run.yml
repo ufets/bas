@@ -1,0 +1,21 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaq
+  name: "[SHADOW-TWELVE] SMBExec from Impacket execution"
+  description: "Shadow используют утилиты PsExec из пакета Sysinternals и smbexec ( smbexec.exe ) из фреймворка Impacket для перемещения по сети и выполнения команд на удалённых системах"
+  tactic: execution
+  technique:
+    attack_id: T1021.002
+    name: "Remote Services: SMB/Windows Admin Shares"
+  platforms:
+    windows:
+      psh:
+        command: |
+          .\PsExec.exe \\#{hostname} -u "#{user}" -p "#{password}"" cmd /c "#{command}"
+        timeout: 120
+        payloads:
+          - PsExec.exe
+  variables:
+    - key: hostname
+    - key: user 
+    - key: password
+    - key: command
+    

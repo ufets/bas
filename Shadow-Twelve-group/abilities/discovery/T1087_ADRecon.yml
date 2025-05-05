@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaj
+  name: "[SHADOW-TWELVE] Discovery with using ADRecon"
+  description: "Shadow использует готовый скрипт ADRecon для получения информации о системе, пользователях и домене."
+  tactic: discovery
+  technique:
+    attack_id: T1087
+    name: "Discovery"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell.exe -ex bypass -f ad_ru.ps1 -GenExcel ./
+        timeout: 120
+        payloads:
+          - ad_ru.ps1

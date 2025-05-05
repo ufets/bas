@@ -1,0 +1,21 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaam
+  name: "[SHADOW-TWELVE] Remote Command Execution via WMI"
+  description: "Выполнение команд через PowerShell Remoting"
+  tactic: execution
+  technique:
+    attack_id: T1047
+    name: "Windows Management Instrumentation"
+  platforms:
+    windows:
+      psh:
+        command: |
+          $command = "#{command}"; ([WmiClass]"\\#{target}\root\cimv2:Win32_Process").Create("cmd.exe /c `"$command`"")
+        timeout: 120
+  variables:
+    - key: target
+      description: "Целевой хост (FQDN или IP)"
+      validation: ^[\w\.-]+$
+      
+    - key: command
+      value: "whoami /all"
+      description: "Команда для выполнения"

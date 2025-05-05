@@ -1,0 +1,23 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ah
+  name: "Indicator Removal: Clear Network Connection History and Configurations"
+  description: "Adversaries may clear or remove evidence of malicious network connections in order to clean up traces of their operations. Configuration settings as well as various artifacts that highlight connection history may be created on a system and/or in application logs from behaviors that require network connections, such as Remote Services or External Remote Services. Defenders may use these artifacts to monitor or otherwise analyze network connections created by adversaries."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1070.007
+    name: "Indicator Removal: Clear Network Connection History and Configurations"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1070.007.sh;
+          ./T1070.007.sh;
+        timeout: 60
+        payloads:
+          - T1070.007.sh
+    windows:
+      psh:
+        command: |
+          powershell -File T1070.007.ps1
+        timeout: 60
+        payloads:
+          - T1070.007.ps1

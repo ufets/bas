@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaad
+  name: "[SHADOW-TWELVE] Specific ngrok service name"
+  description: "Shadow маскирует имена заданий планировщика и служб Windows под продукты Intel, Microsoft и др."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1036.004
+    name: "Masquerading: Masquerade Task or Service"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -f .\ngrk-srv-msft.ps1
+        timeout: 120
+        payloads:
+          - ngrk-srv-msft.ps1

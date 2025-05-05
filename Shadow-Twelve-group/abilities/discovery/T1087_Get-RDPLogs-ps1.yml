@@ -1,0 +1,23 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaj
+  name: "[SHADOW-TWELVE] Discovery with enumeration RDP logs"
+  description: "Shadow исследует логи RDP для получения информации об инфраструктуре и пользователях."
+  tactic: discovery
+  technique:
+    attack_id: T1087
+    name: "Discovery"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell.exe -ex bypass -f Get-RDPLogs.ps1 -ComputerName #{computer_name}
+        timeout: 120
+        payloads:
+          - Get-RDPLogs.ps1
+  variables:
+    - key: computer_name
+      description: |
+        Имя компьютера, для которого нужно получить логи RDP.
+      value: "localhost"
+      
+
+      

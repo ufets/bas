@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363aq
+  name: "System Binary Proxy Execution: Verclsid"
+  description: "Adversaries may abuse verclsid.exe to proxy execution of malicious code. Verclsid.exe is known as the Extension CLSID Verification Host and is responsible for verifying each shell extension before they are used by Windows Explorer or the Windows Shell."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1218.012
+    name: "System Binary Proxy Execution: Verclsid"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1218.012.ps1;
+        timeout: 60
+        payloads:
+          - T1218.012.ps1

@@ -1,0 +1,22 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363av
+  name: "Network Denial of Service: Direct Network Flood"
+  description: "Adversaries may attempt to cause a denial of service (DoS) by directly sending a high-volume of network traffic to a target. This DoS attack may also reduce the availability and functionality of the targeted system(s) and network. Direct Network Floods are when one or more systems are used to send a high-volume of network packets towards the targeted service's network. Almost any network protocol may be used for flooding. Stateless protocols such as UDP or ICMP are commonly used but stateful protocols such as TCP can be used as well"
+  tactic: impact
+  technique:
+    attack_id: T1498.001
+    name: "Network Denial of Service: Direct Network Flood"
+  platforms:
+    windows:
+      psh:
+        command: |
+          .\T1498.001.exe "#{target.ip}" "#{target.duration}"
+        timeout: 120
+        payloads:
+          - T1498.001.exe
+        uploads:
+          - ./payloads/T1498.001.exe  # Путь к файлу на сервере Caldera
+  variables:
+    - key: target.ip
+      value: 192.168.1.100  # Значение по умолчанию
+    - key: target.duration
+      value: 5  # Значение по умолчанию

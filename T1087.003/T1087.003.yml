@@ -1,0 +1,23 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363am
+  name: "Account Discovery: Email Account"
+  description: "Adversaries may attempt to get a listing of email addresses and accounts. "
+  tactic: collection
+  technique:
+    attack_id: T1087.003
+    name: "Account Discovery: Email Account"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1087.003.sh;
+          ./T1087.003.sh;
+        timeout: 60
+        payloads:
+          - T1087.003.sh
+    windows:
+      psh:
+        command: |
+          powershell -File "T1087.003.ps1";
+        timeout: 60
+        payloads:
+          - T1087.003.ps1

@@ -1,0 +1,18 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ag"
+  name: "Input Capture: Web Portal Capture"
+  description: "Adversaries may install code on externally facing portals, such as a VPN login page, to capture and transmit credentials of users who attempt to log into the service. For example, a compromised login page may log provided user credentials before logging the user in to the service."
+  tactic: credential-access
+  technique:
+    attack_id: T1056.003
+    name: "Input Capture: Web Portal Capture"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1056.003_inject.sh;
+          ./T1056.003_inject.sh;
+        timeout: 60
+        payloads:
+          - T1056.003_inject.sh
+          - T1056.003_capture.js
+

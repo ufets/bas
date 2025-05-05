@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363au
+  name: "Virtualization/Sandbox Evasion: User Activity Based Checks"
+  description: "Adversaries may employ various user activity checks to detect and avoid virtualization and analysis environments. This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware to disengage from the victim or conceal the core functions of the implant. They may also search for VME artifacts before dropping secondary or additional payloads. Adversaries may use the information learned from Virtualization/Sandbox Evasion during automated discovery to shape follow-on behaviors."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1497.002
+    name: "Virtualization/Sandbox Evasion: User Activity Based Checks"
+  platforms:
+    windows:
+      psh:
+        command: |
+          .\T1497.002.exe
+        timeout: 60
+        payloads:
+          - T1497.002.exe

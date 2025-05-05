@@ -1,0 +1,24 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ai
+  name: "Indicator Removal: Relocate Malware"
+  description: "Once a payload is delivered, adversaries may reproduce copies of the same malware on the victim system to remove evidence of their presence and/or avoid defenses. Copying malware payloads to new locations may also be combined with File Deletion to cleanup older artifacts."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1070.010
+    name: "Indicator Removal: Relocate Malware"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1070.010.sh;
+          ./T1070.010.sh;
+        timeout: 60
+        payloads:
+          - T1070.010.sh
+    windows:
+      psh:
+        command: |
+          powershell -File T1070.010.ps1;
+        timeout: 60
+        payloads:
+          - T1070.010.ps1
+

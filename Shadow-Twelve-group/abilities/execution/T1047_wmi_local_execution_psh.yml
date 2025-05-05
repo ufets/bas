@@ -1,0 +1,17 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaal
+  name: "[SHADOW-TWELVE] Local Command Execution via WMI"
+  description: "Shadow использует командлеты PowerShell, например Get-WMIObject для выполнения команд и WMI-запросов на локальных и удаленных системах"
+  tactic: execution
+  technique:
+    attack_id: T1047
+    name: "Windows Management Instrumentation"
+  platforms:
+    windows:
+      psh:
+        command: |
+          $command = "#{command}"; ([WmiClass]"\\.\root\cimv2:Win32_Process").Create("cmd.exe /c `"$command`"")
+        timeout: 60
+  variables:
+    - key: command
+      description: "Команда для выполнения (с экранированием кавычек)"
+      value: "systeminfo"

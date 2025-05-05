@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363as
+  name: "System Binary Proxy Execution: MMC"
+  description: "Adversaries may abuse mmc.exe to proxy execution of malicious .msc files. Microsoft Management Console (MMC) is a binary that may be signed by Microsoft and is used in several ways in either its GUI or in a command prompt.[1][2] MMC can be used to create, open, and save custom consoles that contain administrative tools created by Microsoft, called snap-ins. These snap-ins may be used to manage Windows systems locally or remotely. MMC can also be used to open Microsoft created .msc files to manage system configuration."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1218.014
+    name: "System Binary Proxy Execution: MMC"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1218.014.ps1;
+        timeout: 60
+        payloads:
+          - T1218.014.ps1

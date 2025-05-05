@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaa
+  name: "[SHADOW-TWELVE] Ngrok installation"
+  description: "Для сохранения доступа к внутреннему периметру жертв Shadow использует утилиту для туннелирования ngrok"
+  tactic: persistence
+  technique:
+    attack_id: T1053.005
+    name: "Scheduled Task/Job: Scheduled Task"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -f .\ngrk-tsk.ps1
+        timeout: 120
+        payloads:
+          - ngrk-tsk.ps1

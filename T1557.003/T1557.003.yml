@@ -1,0 +1,26 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363az
+  name: "Adversary-in-the-Middle: DHCP Spoofing "
+  description: "Adversaries may redirect network traffic to adversary-owned systems by spoofing Dynamic Host Configuration Protocol (DHCP) traffic and acting as a malicious DHCP server on the victim network. By achieving the adversary-in-the-middle (AiTM) position, adversaries may collect network communications, including passed credentials, especially those sent over insecure, unencrypted protocols. This may also enable follow-on behaviors such as Network Sniffing or Transmitted Data Manipulation."
+  tactic: collection
+  technique:
+    attack_id: T1557.003
+    name: "Adversary-in-the-Middle: DHCP Spoofing"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1557.003;
+          ./T1557.003 "#{target.victim_ip}" "#{target.gateway}" "#{target.dns}"  # Передача 3 аргументов
+        timeout: 120
+        payloads:
+          - T1557.003
+  variables:
+    - key: target.victim_ip
+      description: "Victim IP address"
+      validation: ^\d{1,3}(\.\d{1,3}){3}$  # Валидация IPv4
+    - key: target.gateway
+      description: "Fake gateway IP"
+      validation: ^\d{1,3}(\.\d{1,3}){3}$
+    - key: target.dns
+      description: "Fake DNS server IP"
+      validation: ^\d{1,3}(\.\d{1,3}){3}$

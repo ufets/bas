@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaai
+  name: "[SHADOW-TWELVE] Clean RDP History"
+  description: "Shadow очищает историю RDP-подключений путём манипуляций с реестром"
+  tactic: defense-evasion
+  technique:
+    attack_id: T1112
+    name: "Modify Registry"
+  platforms:
+    windows:
+      psh:
+        command: |
+          ./CleanRDPHistory.bat
+        timeout: 120
+        payloads:
+          - CleanRDPHistory.bat

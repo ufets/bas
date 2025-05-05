@@ -1,4 +1,4 @@
-# Функция для проверки прав доступа и записи на диск
+# Функция проверки прав и записи на диск
 function Test-DiskWriteAccess {
     param (
         [string]$Disk
@@ -6,44 +6,39 @@ function Test-DiskWriteAccess {
 
     Write-Host "Testing Disk: $Disk" -ForegroundColor Cyan
 
-    # Проверка доступности устройства для записи
     try {
-        $stream = New-Object IO.FileStream($Disk, 'Open', 'ReadWrite')
+        $stream = [IO.File]::Open($Disk, 'Open', 'ReadWrite')
         Write-Host "Success: $Disk is accessible for read and write." -ForegroundColor Green
         $stream.Close()
+        return $true
     } catch {
         Write-Host "Error: Cannot open $Disk for writing. Permission denied." -ForegroundColor Red
-        return
+        return $false
     }
-
-    # Попытка записи случайных данных
-    try {
-        $randomData = [byte[]](0..255 | ForEach-Object { Get-Random -Maximum 256 })
-        $stream = New-Object IO.FileStream($Disk, 'Open', 'ReadWrite')
-        $stream.Seek(0, [System.IO.SeekOrigin]::Begin) | Out-Null
-        $stream.Write($randomData, 0, $randomData.Length)
-        $stream.Close()
-        Write-Host "Success: Write access to $Disk was successfully tested." -ForegroundColor Green
-    } catch {
-        Write-Host "Error: Write access to $Disk is denied." -ForegroundColor Red
-    }
-}
-
-# Функция для получения списка физических дисков
-function Get-PhysicalDisks {
-    $disks = Get-WmiObject -Class Win32_DiskDrive
-    return $disks
 }
 
 # Основная логика
-$disks = Get-PhysicalDisks
-if ($disks.Count -eq 0) {
+$disks = Get-WmiObject -Class Win32_DiskDrive
+if (-not $disks) {
     Write-Host "No physical disks found." -ForegroundColor Red
     exit 1
 }
 
+# Булев флаг для агрегирования результатов
+$anySuccess = $false
+
 foreach ($disk in $disks) {
-    $diskPath = "\\.\PhysicalDrive$($disk.DeviceID)"
-    Test-DiskWriteAccess -Disk $diskPath
+    # Формируем путь к физическому устройству
+    $path = "\\.\PhysicalDrive$($disk.Index)"
+    if (Test-DiskWriteAccess -Disk $path) {
+        $anySuccess = $true
+    }
     Write-Host
+}
+
+# Выход с кодом 0, если была хотя бы одна успешная проверка, иначе 1
+if ($anySuccess) {
+    exit 0
+} else {
+    exit 1
 }

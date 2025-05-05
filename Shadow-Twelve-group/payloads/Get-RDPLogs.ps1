@@ -1,0 +1,1 @@
+Get-WinEvent «Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational» | ?{$_.ID -eq «1149»} | %{ New-Object PSObject -Property @{MachineName = $_.MachineName TimeCreated = $_.TimeCreatedUser = $_.Properties[0].Value Domain = $_.Properties[1].Value SourceIP = $_.Properties[2].Value } }

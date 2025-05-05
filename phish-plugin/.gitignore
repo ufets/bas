@@ -1,0 +1,5 @@
+*recipients.json
+*sender.json
+config.*
+venv/
+__pycache__/

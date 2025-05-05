@@ -1,0 +1,34 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363af
+  name: "Process Injection: Ptrace System Calls"
+  description: "Adversaries may inject malicious code into processes via ptrace (process trace) system calls in order to evade process-based defenses as well as possibly elevate privileges. Ptrace system call injection is a method of executing arbitrary code in the address space of a separate live process. Ptrace system call injection involves attaching to and modifying a running process. The ptrace system call enables a debugging process to observe and control another process (and each individual thread), including changing memory and register values.[1] Ptrace system call injection is commonly performed by writing arbitrary code into a running process (ex: malloc) then invoking that memory with PTRACE_SETREGS to set the register containing the next instruction to execute. Ptrace system call injection can also be done with PTRACE_POKETEXT/PTRACE_POKEDATA, which copy data to a specific address in the target processes’ memory (ex: the current address of the next instruction"
+  tactic: defense-evasion
+  technique:
+    attack_id: T1055.008
+    name: "Process Injection: Ptrace System Calls"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          gcc T1055.008.c -o T1055.008 && \
+          gcc T1055.008_sample.c -o T1055.008_sample && \
+          chmod +x ./T1055.008 && \
+          chmod +x ./T1055.008_sample && \
+          ./T1055.008_sample & pid_prog1=$! && \
+          ./T1055.008 "$pid_prog1" ;
+          sleep 3 ;
+          rm -f T1055.008_sample T1055.008;
+        timeout: 60
+        payloads:
+          - T1055.008.c
+          - T1055.008_sample.c
+        cleanup: |
+          pkill -f T1055.008_sample; 
+          pkill -f T1055.008;
+          sleep 1;
+          if [ -f "T1055.008_sample" ]; then
+            rm "T1055.008_sample"
+          fi
+          if [ -f "T1055.008" ]; then
+            rm "T1055.008"
+          fi
+

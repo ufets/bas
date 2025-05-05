@@ -1,0 +1,19 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ag
+  name: "Process Injection: VDSO Hijacking"
+  description: "Adversaries may inject malicious code into processes via VDSO hijacking in order to evade process-based defenses as well as possibly elevate privileges. Virtual dynamic shared object (vdso) hijacking is a method of executing arbitrary code in the address space of a separate live process."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1055.014
+    name: "Process Injection: VDSO Hijacking"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          gcc T1055.014.c -o T1055.014;
+          chmod +x ./T1055.014;
+          ./T1055.008_sample;
+        timeout: 90
+        payloads:
+          - T1055.014.c
+
+

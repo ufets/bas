@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaau
+  name: "[SHADOW-TWELVE] Anydesk - download and service creation persistence"
+  description: "Для сохранения доступа к внутреннему периметру жертв Shadow инсталлирует программу удаленного доступа AnyDesk в качестве службы, а также создает службы для закрепления Cobint"
+  tactic: persistence
+  technique:
+    attack_id: T1543.003
+    name: "Create or Modify System Process: Windows Service"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -File .\andsk-srv.ps1
+        timeout: 120
+        payloads:
+          - andsk-srv.ps1

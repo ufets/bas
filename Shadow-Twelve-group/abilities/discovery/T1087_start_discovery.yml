@@ -1,0 +1,17 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaak
+  name: "[SHADOW-TWELVE] CMD.exe discovery"
+  description: "Shadow использует cmd.exe для получения информации о системе, пользователях и домене"
+  tactic: discovery
+  technique:
+    attack_id: T1087
+    name: "Discovery"
+  platforms:
+    windows:
+      cmd:
+        command: |
+          whoami &
+          net user %USERNAME% /domain &
+          net localgroup /domain &
+          net group "Администраторы домена" /domain &
+          nltest /trusted_domains
+        timeout: 60

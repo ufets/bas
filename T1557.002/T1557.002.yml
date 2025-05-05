@@ -1,0 +1,29 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ay
+  name: "Adversary-in-the-Middle: ARP Cache Poisoning"
+  description: "Adversaries may poison Address Resolution Protocol (ARP) caches to position themselves between the communication of two or more networked devices. This activity may be used to enable follow-on behaviors such as Network Sniffing or Transmitted Data Manipulation."
+  tactic: collection
+  technique:
+    attack_id: T1557.002
+    name: "Adversary-in-the-Middle: ARP Cache Poisoning"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x ./T1557.002;
+          ./T1557.002 "#{arp.interface}" "#{target.victim_ip}" "#{target.victim_mac}" "#{target.gateway_ip}";
+        timeout: 120
+        payloads:
+          - T1557.002
+  variables:
+    - key: arp.interface
+      value: eth0
+      description: "Network interface to use"
+    - key: target.victim_ip
+      value: 192.168.1.100
+      validation: ^\d{1,3}(\.\d{1,3}){3}$
+    - key: target.victim_mac
+      value: "00:1A:2B:3C:4D:5E"
+      validation: ^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$
+    - key: target.gateway_ip
+      value: 192.168.1.1
+      validation: ^\d{1,3}(\.\d{1,3}){3}$

@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaad
+  name: "[SHADOW-TWELVE] Kasperky Remover"
+  description: "Shadow удаляет Kaspersky с помощью powershell-скрипта remover-kasper.ps1"
+  tactic: defense-evasion
+  technique:
+    attack_id: T1562.001
+    name: "Impair Defenses: Disable or Modify Tools"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ep Bypass -w Hidden -f .\remover-kasper.ps1
+        timeout: 120
+        payloads:
+          - remover-kasper.ps1

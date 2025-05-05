@@ -1,0 +1,21 @@
+- requirements: []
+  platforms:
+    windows:
+      psh:
+        command: powershell -File Check-DiskWipePermissions.ps1
+        timeout: 60
+        payloads:
+          - Check-DiskWipePermissions.ps1
+    linux:
+      sh:
+        command: |
+          chmod +x ./Check-DiskWipePermissions.sh; ./Check-DiskWipePermissions.sh
+        timeout: 60
+        payloads:
+          - Check-DiskWipePermissions.sh
+  name: Disk Content Wipe
+  description: Adversaries may erase the contents of storage devices on specific systems or in large numbers in a network to interrupt availability to system and network resources.
+  tactic: impact
+  technique_name: Disk Content Wipe
+  technique_id: T1561.001
+  id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ae

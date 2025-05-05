@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaai
+  name: "[SHADOW-TWELVE] Collect Telegram credentials via powershell"
+  description: "Shadow использует скрипт killhost.ps1 для для принудительного завершения работы хостов домена. Список имен хостов содержится в текстовом файле C:\\adminhost.txt"
+  tactic: credential-access
+  technique:
+    attack_id: T1555.008
+    name: "Credentials from Password Stores: Telegram"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -ex bypass -f killhost.ps1
+        timeout: 120
+        payloads:
+          - killhost.ps1

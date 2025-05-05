@@ -1,0 +1,15 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ap
+  name: "System Script Proxy Execution: SyncAppvPublishingServer"
+  description: "Adversaries may abuse SyncAppvPublishingServer.vbs to proxy execution of malicious PowerShell commands. SyncAppvPublishingServer.vbs is a Visual Basic script associated with how Windows virtualizes applications (Microsoft Application Virtualization, or App-V).[1] For example, Windows may render Win32 applications to users as virtual applications, allowing users to launch and interact with them as if they were installed locally."
+  tactic: defense-evasion
+  technique:
+    attack_id: T1216.002
+    name: "System Script Proxy Execution: SyncAppvPublishingServer"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell -File T1216.002.ps1;
+        timeout: 60
+        payloads:
+          - T1216.002.ps1

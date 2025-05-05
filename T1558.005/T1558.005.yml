@@ -1,0 +1,18 @@
+- id: 612b6cfa-4ebe-4e50-bb1f-9feff9f363ba
+  name: "Steal or Forge Kerberos Tickets: Ccache Files"
+  description: "Adversaries may attempt to steal Kerberos tickets stored in credential cache files (or ccache). These files are used for short term storage of a user's active session credentials. The ccache file is created upon user authentication and allows for access to multiple services without the user having to re-enter credentials."
+  tactic: credential-access
+  technique:
+    attack_id: T1558.005 
+    name: "Steal or Forge Kerberos Tickets: Ccache Files"
+  platforms:
+    darwin,linux:
+      sh:
+        command: |
+          chmod +x T1558.005.sh;
+          T1558.005.sh;
+        timeout: 120
+        payloads:
+          - T1558.005.sh
+
+

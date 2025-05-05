@@ -1,0 +1,6 @@
+*__pycache__/
+*.pyc
+visualisators/assets.json
+assets.json
+venv/
+recon_data.db*
